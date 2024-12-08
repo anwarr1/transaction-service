@@ -1,0 +1,9 @@
+
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(´¯Ã™øÿÿÿÿ8ã¿âõ¸2
+o	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(º›Æ·ùÿÿÿÿ8ä¿âõ¸2
+N
+java:S1068"1Remove this unused "fournisseurId" private field.(òÌÉ™8å¿âõ¸2
+G
+java:S1068"+Remove this unused "montant" private field.(ˆÌèV8æ¿âõ¸2
+K
+java:S1068".Remove this unused "dateLimite" private field.(ÙÇëì8æ¿âõ¸2

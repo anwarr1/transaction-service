@@ -1,0 +1,8 @@
+
+y	java:S116"]Rename this field "rÃ©fÃ©renceFacture" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(•ÁªÄ8Úûßõ¸2
+Q
+java:S1068"/Remove this unused "fournisseur" private field.(¿ıœúÿÿÿÿ8ßûßõ¸2
+S
+java:S1068"6Remove this unused "rÃ©fÃ©renceFacture" private field.(•ÁªÄ8ßûßõ¸2
+G
+java:S1068"+Remove this unused "montant" private field.(ˆÌèV8àûßõ¸2

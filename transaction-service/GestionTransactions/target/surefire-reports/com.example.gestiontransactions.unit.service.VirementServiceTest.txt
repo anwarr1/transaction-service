@@ -1,0 +1,32 @@
+-------------------------------------------------------------------------------
+Test set: com.example.gestiontransactions.unit.service.VirementServiceTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.865 s <<< FAILURE! -- in com.example.gestiontransactions.unit.service.VirementServiceTest
+com.example.gestiontransactions.unit.service.VirementServiceTest.testEffectuerVirement_FondsInsuffisants -- Time elapsed: 0.709 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Unexpected exception type thrown, expected: <java.lang.IllegalArgumentException> but was: <com.example.gestiontransactions.exception.ResourceNotFoundException>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:67)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.gestiontransactions.unit.service.VirementServiceTest.testEffectuerVirement_FondsInsuffisants(VirementServiceTest.java:54)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+Caused by: com.example.gestiontransactions.exception.ResourceNotFoundException: Compte expéditeur non trouvé
+	at com.example.gestiontransactions.service.VirementService.lambda$effectuerVirement$0(VirementService.java:23)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.example.gestiontransactions.service.VirementService.effectuerVirement(VirementService.java:23)
+	at com.example.gestiontransactions.unit.service.VirementServiceTest.lambda$testEffectuerVirement_FondsInsuffisants$0(VirementServiceTest.java:54)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	... 6 more
+
+com.example.gestiontransactions.unit.service.VirementServiceTest.testEffectuerVirement_Succes -- Time elapsed: 0.126 s <<< ERROR!
+com.example.gestiontransactions.exception.ResourceNotFoundException: Compte expéditeur non trouvé
+	at com.example.gestiontransactions.service.VirementService.lambda$effectuerVirement$0(VirementService.java:23)
+	at java.base/java.util.Optional.orElseThrow(Optional.java:403)
+	at com.example.gestiontransactions.service.VirementService.effectuerVirement(VirementService.java:23)
+	at com.example.gestiontransactions.unit.service.VirementServiceTest.testEffectuerVirement_Succes(VirementServiceTest.java:108)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
