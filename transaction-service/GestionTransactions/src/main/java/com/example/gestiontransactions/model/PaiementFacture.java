@@ -1,24 +1,24 @@
 package com.example.gestiontransactions.model;
 
-import com.example.gestiontransactions.model.Transaction;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Entity
 @Data
 public class PaiementFacture extends Transaction {
 
-    private String fournisseur;
-    private String referenceFacture;
+    @OneToOne
+    @JoinColumn(name = "Fournisseur_id")
+    private Fournisseur fournisseur;
+    @OneToOne
+    @JoinColumn(name = "Facture_id")
+    private Facture facture;
 
     @ManyToOne
     @JoinColumn(name = "compte_id")
-    private Compte compte; // Lié au compte de l'utilisateur
+    private Compte compte;
 
-    // Méthode pour traiter le paiement de la facture
-    public void traiterPaiement() {
-        // Logique pour traiter le paiement
-    }
-
-    // Getters and Setters
 }

@@ -1,7 +1,7 @@
 package com.example.gestiontransactions.unit.controller;
 
 import com.example.gestiontransactions.controller.PaiementFactureController;
-import com.example.gestiontransactions.model.PaiementFacture;
+import com.example.gestiontransactions.model.*;
 import com.example.gestiontransactions.service.PaiementFactureService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PaiementFactureControllerTest {
@@ -22,34 +23,53 @@ public class PaiementFactureControllerTest {
     private PaiementFactureController paiementFactureController;
 
     private PaiementFacture paiementFacture;
+    private Fournisseur fournisseur;
+    private Facture facture;
+    private Compte compte;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this);
 
+        // Mock related entities
+        fournisseur = new Fournisseur();
+        fournisseur.setId(1L);
+        fournisseur.setNom("Test Fournisseur");
+
+        facture = new Facture();
+        facture.setId(1L);
+        facture.setMontant(100.0);
+
+        compte = new Compte();
+        compte.setId(1L);
+        compte.setSolde(500.0);
+
+        // Initialize PaiementFacture
         paiementFacture = new PaiementFacture();
-        paiementFacture.setFournisseur("Test Fournisseur");
-        paiementFacture.setMontant(100.0);
+        paiementFacture.setFournisseur(fournisseur);
+        paiementFacture.setFacture(facture);
+        paiementFacture.setCompte(compte);
 
         when(paiementFactureService.traiterPaiement(any())).thenReturn(paiementFacture);
     }
 
     @Test
     public void testTraiterPaiement() {
-        // Appel de la méthode du contrôleur
+        // Call the controller method
         PaiementFacture result = paiementFactureController.traiterPaiement(paiementFacture);
 
-        // Vérification que la réponse est correcte
-        assertEquals("Test Fournisseur", result.getFournisseur());
-        assertEquals(100.0, result.getMontant());
+        // Verify the response is correct
+        assertEquals(fournisseur.getNom(), result.getFournisseur().getNom());
+        assertEquals(facture.getMontant(), result.getFacture().getMontant());
+        assertEquals(compte.getId(), result.getCompte().getId());
     }
 
     @Test
     public void testTraiterPaiement_ServiceInteraction() {
-        // Appel de la méthode du contrôleur avec un mock
+        // Call the controller method with the mock
         paiementFactureController.traiterPaiement(paiementFacture);
 
-        // Vérification que le service est bien appelé avec les données attendues
-        org.mockito.Mockito.verify(paiementFactureService).traiterPaiement(any());
+        // Verify the service is called with the expected data
+        verify(paiementFactureService).traiterPaiement(any());
     }
 }

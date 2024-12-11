@@ -1,5 +1,6 @@
 package com.example.gestiontransactions.unit.service;
 
+import com.example.gestiontransactions.dto.SMS;
 import com.example.gestiontransactions.exception.ResourceNotFoundException;
 import com.example.gestiontransactions.model.Compte;
 import com.example.gestiontransactions.model.Virement;
@@ -28,9 +29,23 @@ class VirementServiceTest {
     @InjectMocks
     private VirementService virementService;
 
+    private SMS sms;
+
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
+        // Initialize the SMS object
+        sms = new SMS();
+        sms.setPhone("+212648361147");
+        sms.setCustomerFirstName("John");
+        sms.setCustomerLastName("Doe");
+        sms.setAmount(1000.0);
+        sms.setBeneficiaryFirstName("Jane");
+        sms.setBeneficiaryLastName("Smith");
+        sms.setSendRef(true);
+        sms.setRef("REF123");
+        sms.setPin("1234");
     }
 
     @Test
@@ -54,7 +69,7 @@ class VirementServiceTest {
         when(virementRepository.save(virement)).thenReturn(virement);
 
         // Act
-        Virement result = virementService.effectuerVirement(virement);
+        Virement result = virementService.effectuerVirement(virement, sms);
 
         // Assert
         assertNotNull(result);
@@ -82,7 +97,7 @@ class VirementServiceTest {
         when(compteRepository.findById(1L)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(ResourceNotFoundException.class, () -> virementService.effectuerVirement(virement));
+        assertThrows(ResourceNotFoundException.class, () -> virementService.effectuerVirement(virement, sms));
 
         verify(compteRepository, times(1)).findById(1L);
         verify(compteRepository, never()).findById(2L);
@@ -108,7 +123,7 @@ class VirementServiceTest {
         when(compteRepository.findById(2L)).thenReturn(Optional.empty());
 
         // Act & Assert
-        assertThrows(ResourceNotFoundException.class, () -> virementService.effectuerVirement(virement));
+        assertThrows(ResourceNotFoundException.class, () -> virementService.effectuerVirement(virement, sms));
 
         verify(compteRepository, times(1)).findById(1L);
         verify(compteRepository, times(1)).findById(2L);

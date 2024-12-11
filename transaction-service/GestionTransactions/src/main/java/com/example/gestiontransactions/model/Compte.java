@@ -23,13 +23,7 @@ public class Compte {
 
     }
 
-    public Double getSolde() {
-        return solde;
-    }
 
-    public void setSolde(Double solde) {
-        this.solde = solde;
-    }
 
     @Column(name = "user_id")
     private Integer idUser; // Référence à l'utilisateur
