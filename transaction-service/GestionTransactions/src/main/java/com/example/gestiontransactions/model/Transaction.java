@@ -26,5 +26,4 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TypeTransaction typeTransaction;
 
-    // Getters and Setters
 }

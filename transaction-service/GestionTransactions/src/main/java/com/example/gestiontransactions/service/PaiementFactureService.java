@@ -1,6 +1,7 @@
 package com.example.gestiontransactions.service;
 
 import com.example.gestiontransactions.enums.StatutFacture;
+import com.example.gestiontransactions.enums.TypeService;
 import com.example.gestiontransactions.exception.InsufficientFundsException;
 import com.example.gestiontransactions.exception.ResourceNotFoundException;
 import com.example.gestiontransactions.external.ExternalPortfolioService;
@@ -30,19 +31,20 @@ public class PaiementFactureService {
     }
 
     public PaiementFacture traiterPaiement(PaiementFacture paiementFacture) {
-        paiementFacture.setMontant(factureRepository.findById(paiementFacture.getFacture().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Facture non trouvée")).getMontant());
+
+        double montant = factureRepository.findById(paiementFacture.getFacture().getId()).get().getMontant();
+        paiementFacture.setMontant(montant);
         // Récupérer le compte associé au paiement
         Compte compte = compteRepository.findById(paiementFacture.getCompte().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Compte non trouvé"));
 
         // Vérifier si le compte a suffisamment de fonds pour le paiement
-        if (compte.getSolde() < paiementFacture.getMontant()) {
+        if (compte.getSolde() < montant) {
             throw new InsufficientFundsException("Solde insuffisant pour effectuer le paiement");
         }
 
         // Déduire le montant du solde du compte
-        compte.setSolde(compte.getSolde() - paiementFacture.getMontant());
+        compte.setSolde(compte.getSolde() - montant);
         compteRepository.save(compte);
 
         // Mettre à jour la facture en la marquant comme payée
@@ -52,10 +54,75 @@ public class PaiementFactureService {
 
         factureRepository.save(facture);
         FactureRequest factureRequest = new FactureRequest();
-        factureRequest.setSomme(paiementFacture.getMontant());
+        factureRequest.setSomme(montant);
         factureRequest.setUtilisateurId(Long.valueOf(compte.getIdUser()));
         externalPortfolioService.updateFacture(factureRequest);
         // Sauvegarder le paiement de facture
+        Facture facture1 = factureRepository.findById(paiementFacture.getFacture().getId()).get();
+        paiementFacture.setFacture(facture1);
         return paiementFactureRepository.save(paiementFacture);
+
+    }
+
+    public void Recharge(PaiementFacture paiementFacture) {
+
+        double montant = 20;
+        Facture facture = new Facture();
+        facture.setType_facture(TypeService.RECHARGE);
+        facture.setMontant(montant);
+        facture.setStatut(StatutFacture.PAYÉE);
+
+        paiementFacture.setMontant(montant);
+
+        Compte compte = compteRepository.findById(paiementFacture.getCompte().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Compte non trouvé"));
+
+        if (compte.getSolde() < montant) {
+            throw new InsufficientFundsException("Solde insuffisant pour effectuer le paiement");
+        }
+
+        compte.setSolde(compte.getSolde() - montant);
+        compteRepository.save(compte);
+
+        factureRepository.save(facture);
+        FactureRequest factureRequest = new FactureRequest();
+        factureRequest.setSomme(montant);
+        factureRequest.setUtilisateurId(Long.valueOf(compte.getIdUser()));
+        externalPortfolioService.updateFacture(factureRequest);
+        // Sauvegarder le paiement de facture
+        paiementFacture.setFacture(facture);
+        paiementFactureRepository.save(paiementFacture);
+
+    }
+
+    public void Don(PaiementFacture paiementFacture) {
+
+        double montant = 20;
+        Facture facture = new Facture();
+        facture.setType_facture(TypeService.DON);
+        facture.setMontant(montant);
+        facture.setStatut(StatutFacture.PAYÉE);
+
+        paiementFacture.setMontant(montant);
+
+        Compte compte = compteRepository.findById(paiementFacture.getCompte().getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Compte non trouvé"));
+
+        if (compte.getSolde() < montant) {
+            throw new InsufficientFundsException("Solde insuffisant pour effectuer le paiement");
+        }
+
+        compte.setSolde(compte.getSolde() - montant);
+        compteRepository.save(compte);
+
+        factureRepository.save(facture);
+        FactureRequest factureRequest = new FactureRequest();
+        factureRequest.setSomme(montant);
+        factureRequest.setUtilisateurId(Long.valueOf(compte.getIdUser()));
+        externalPortfolioService.updateFacture(factureRequest);
+        // Sauvegarder le paiement de facture
+        paiementFacture.setFacture(facture);
+        paiementFactureRepository.save(paiementFacture);
+
     }
 }

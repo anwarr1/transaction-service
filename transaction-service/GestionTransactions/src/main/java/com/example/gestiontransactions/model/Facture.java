@@ -14,10 +14,12 @@ public class Facture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String fournisseurId;
+
+    @OneToOne
+    @JoinColumn(name = "fournisseur_id")
+    private Fournisseur fournisseur;
     private Double montant;
     private Date dateLimite;
-    private String numContrat;
 
     @Enumerated(EnumType.STRING)
     private StatutFacture statut;
@@ -25,13 +27,4 @@ public class Facture {
     @Enumerated(EnumType.STRING)
     private TypeService type_facture;
 
-    public void genererFactureRecurrente() {
-        // Logique pour générer une facture récurrente
-    }
-
-    public void marquerPayee() {
-        // Logique pour marquer la facture comme payée
-    }
-
-    // Getters and Setters
 }

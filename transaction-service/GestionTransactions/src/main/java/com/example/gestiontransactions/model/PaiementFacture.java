@@ -10,9 +10,7 @@ import lombok.Data;
 @Data
 public class PaiementFacture extends Transaction {
 
-    @OneToOne
-    @JoinColumn(name = "Fournisseur_id")
-    private Fournisseur fournisseur;
+  
     @OneToOne
     @JoinColumn(name = "Facture_id")
     private Facture facture;

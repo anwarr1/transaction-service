@@ -1,7 +1,9 @@
 package com.example.gestiontransactions.external;
 
 import com.example.gestiontransactions.dto.UpdatePortefeuille;
+import com.example.gestiontransactions.model.Compte;
 import com.example.gestiontransactions.model.Virement;
+import com.example.gestiontransactions.request.CompteRequest;
 import com.example.gestiontransactions.request.FactureRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +25,12 @@ public interface ExternalPortfolioService {
     @PostMapping("/updateFacture")
     Virement updateFacture(
             @RequestBody FactureRequest factureRequest
+
+    );
+
+    @PostMapping("/ajoutCompte")
+    Compte sendCompte(
+            @RequestBody CompteRequest compteRequest
 
     );
 }

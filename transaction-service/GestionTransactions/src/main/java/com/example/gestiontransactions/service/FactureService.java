@@ -30,7 +30,8 @@ public class FactureService {
                 .orElseThrow(() -> new ResourceNotFoundException("Facture non trouvée"));
 
         // Mettre à jour les informations de la facture
-        facture.setFournisseurId(factureDetails.getFournisseurId());
+
+       facture.setFournisseur(factureDetails.getFournisseur());
         facture.setMontant(factureDetails.getMontant());
         facture.setDateLimite(factureDetails.getDateLimite());
 

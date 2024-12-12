@@ -15,7 +15,6 @@ public class Virement extends Transaction {
     @JoinColumn(name = "compte_destinataire_id")
     private Compte destinataire; // Lien avec le compte du destinataire
 
-    // Logique métier pour effectuer le virement
     public void effectuerVirement() {
         // Exemple de logique pour transférer l'argent du compte expéditeur au compte destinataire
         this.expediteur.setSolde(this.expediteur.getSolde() - this.getMontant());
