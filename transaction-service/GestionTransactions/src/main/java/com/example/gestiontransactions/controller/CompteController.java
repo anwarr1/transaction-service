@@ -1,5 +1,6 @@
 package com.example.gestiontransactions.controller;
 
+import com.example.gestiontransactions.dto.RetirerDuCompte;
 import com.example.gestiontransactions.model.Compte;
 import com.example.gestiontransactions.service.CompteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,12 @@ public class CompteController {
     @PutMapping("/{id}")
     public Compte mettreAJourCompte(@PathVariable Long id, @RequestBody Compte compteDetails) {
         return compteService.mettreAJourCompte(id, compteDetails);
+    }
+
+    // Mettre à jour un compte existant
+    @PostMapping("/retirer")
+    void retirerCompte(@RequestBody RetirerDuCompte retirerDuCompte) {
+        compteService.retirerDuCompte(retirerDuCompte.getCompteId(), retirerDuCompte.getMontant());
     }
 
     // Supprimer un compte

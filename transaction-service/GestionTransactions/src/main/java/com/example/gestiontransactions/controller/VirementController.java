@@ -4,13 +4,11 @@ import com.example.gestiontransactions.model.Virement;
 import com.example.gestiontransactions.request.VirementRequest;
 import com.example.gestiontransactions.service.VirementService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/virements")
+@CrossOrigin(origins = "http://localhost:4200")
 public class VirementController {
 
     @Autowired

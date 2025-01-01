@@ -7,6 +7,8 @@ import com.example.gestiontransactions.repository.FactureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FactureService {
 
@@ -22,6 +24,9 @@ public class FactureService {
     public Facture recupererFacture(Long id) {
         return factureRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Facture non trouvée"));
+    }
+    public List<Facture> recupererFactures() {
+        return factureRepository.findAll();
     }
 
     // Mettre à jour une facture existante

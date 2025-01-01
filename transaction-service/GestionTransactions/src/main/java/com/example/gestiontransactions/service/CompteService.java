@@ -1,5 +1,6 @@
 package com.example.gestiontransactions.service;
 
+import com.example.gestiontransactions.exception.InsufficientFundsException;
 import com.example.gestiontransactions.exception.ResourceNotFoundException;
 import com.example.gestiontransactions.external.ExternalPortfolioService;
 import com.example.gestiontransactions.model.Compte;
@@ -24,6 +25,23 @@ public class CompteService {
         externalPortfolioService.sendCompte(compteRequest);
 
         return compteRepository.save(compte); // Sauvegarde le nouveau compte dans la base de données
+    }
+
+    public void retirerDuCompte(Long compteId, double montant) {
+        // Récupérer le compte correspondant
+        Compte compte = compteRepository.findById(compteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Compte non trouvé"));
+
+        // Vérifier si le solde est suffisant
+        if (compte.getSolde() < montant) {
+            throw new InsufficientFundsException("Solde insuffisant pour créer une carte virtuelle");
+        }
+
+        compte.setSolde(compte.getSolde() - montant);
+
+        // Sauvegarder le compte mis à jour
+        compteRepository.save(compte);
+
     }
 
     // Récupérer un compte par son ID

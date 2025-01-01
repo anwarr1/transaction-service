@@ -5,8 +5,11 @@ import com.example.gestiontransactions.service.FactureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/factures")
+@CrossOrigin(origins = "http://localhost:4200")
 public class FactureController {
 
     @Autowired
@@ -22,6 +25,10 @@ public class FactureController {
     @GetMapping("/{id}")
     public Facture recupererFacture(@PathVariable Long id) {
         return factureService.recupererFacture(id);
+    }  // Récupérer une facture par son ID
+    @GetMapping("")
+    public List<Facture> getFactures() {
+        return factureService.recupererFactures();
     }
 
     // Mettre à jour une facture existante

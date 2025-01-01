@@ -54,7 +54,7 @@ public class VirementService {
 
 
 
-        externalNotificationService.sendSMS(sms);
+//        externalNotificationService.sendSMS(sms);
         return savedVirement;
     }
 }

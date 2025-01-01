@@ -31,8 +31,9 @@ public class PaiementFactureService {
     }
 
     public PaiementFacture traiterPaiement(PaiementFacture paiementFacture) {
-
-        double montant = factureRepository.findById(paiementFacture.getFacture().getId()).get().getMontant();
+        System.out.println("Paiement facture solde: " + paiementFacture.getCompte().getSolde());
+        System.out.println("Paiement facture solde: " + paiementFacture.getFacture().getMontant());
+        double montant = paiementFacture.getFacture().getMontant();
         paiementFacture.setMontant(montant);
         // Récupérer le compte associé au paiement
         Compte compte = compteRepository.findById(paiementFacture.getCompte().getId())
