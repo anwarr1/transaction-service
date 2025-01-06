@@ -1,8 +1,8 @@
 package com.example.gestiontransactions.service;
 
+import com.example.gestiontransactions.enums.StatutFacture;
 import com.example.gestiontransactions.exception.ResourceNotFoundException;
 import com.example.gestiontransactions.model.Facture;
-import com.example.gestiontransactions.enums.StatutFacture;
 import com.example.gestiontransactions.repository.FactureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +25,7 @@ public class FactureService {
         return factureRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Facture non trouvée"));
     }
+
     public List<Facture> recupererFactures() {
         return factureRepository.findAll();
     }
@@ -36,7 +37,7 @@ public class FactureService {
 
         // Mettre à jour les informations de la facture
 
-       facture.setFournisseur(factureDetails.getFournisseur());
+        facture.setFournisseur(factureDetails.getFournisseur());
         facture.setMontant(factureDetails.getMontant());
         facture.setDateLimite(factureDetails.getDateLimite());
 
@@ -58,5 +59,9 @@ public class FactureService {
 
         facture.setStatut(StatutFacture.PAYÉE); // Marquer la facture comme payée
         return factureRepository.save(facture); // Sauvegarder la facture mise à jour
+    }
+
+    public List<Facture> getFactureByFournisseurId(Long id) {
+        return factureRepository.findByFournisseurId(id);
     }
 }

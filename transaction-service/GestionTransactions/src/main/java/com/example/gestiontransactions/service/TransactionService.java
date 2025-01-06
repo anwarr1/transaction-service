@@ -7,6 +7,9 @@ import com.example.gestiontransactions.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @Service
 public class TransactionService {
 
@@ -23,5 +26,11 @@ public class TransactionService {
                 .orElseThrow(() -> new ResourceNotFoundException("Transaction non trouvée"));
         transaction.setStatutTransaction(StatutTransaction.TERMINÉE); // Validation de la transaction
         return transactionRepository.save(transaction);
+    }
+
+
+
+    public List<Transaction> getTransactionsByYearAndMonth(int year, int month) {
+        return transactionRepository.findByDateRange(year, month);
     }
 }

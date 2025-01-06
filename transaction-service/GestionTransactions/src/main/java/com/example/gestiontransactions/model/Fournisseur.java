@@ -15,4 +15,5 @@ public class Fournisseur {
     private Long id;
     private String nom;
     private String imageUrl;
+    private String category;
 }

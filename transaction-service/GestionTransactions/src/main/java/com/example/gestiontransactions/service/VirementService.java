@@ -30,13 +30,13 @@ public class VirementService {
     @Autowired
     private CompteRepository compteRepository;
 
-    public Virement effectuerVirement(Virement virement,SMS sms) {
+    public Virement effectuerVirement(Virement virement, SMS sms) {
         // Logique métier pour effectuer le virement entre l'expéditeur et le destinataire
         Compte expediteur = compteRepository.findById(virement.getExpediteur().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Compte expéditeur non trouvé"));
-        Compte destinataire = compteRepository.findById(virement.getDestinataire().getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Compte destinataire non trouvé"));
-
+        Compte destinataire = compteRepository.findByRib("08023000000000904");
+//                .orElseThrow(() -> new ResourceNotFoundException("Compte destinataire non trouvé"));
+        System.out.println("Destinateur Id : " + destinataire.getId());
         // Effectuer le virement
         expediteur.setSolde(expediteur.getSolde() - virement.getMontant());
         destinataire.setSolde(destinataire.getSolde() + virement.getMontant());
@@ -50,9 +50,7 @@ public class VirementService {
         updatePortefeuille.setDestinataireId(virement.getDestinataire().getId());
         updatePortefeuille.setExpediteurId(virement.getExpediteur().getId());
         updatePortefeuille.setSomme(virement.getMontant());
-        externalPortfolioService.sendVirement(updatePortefeuille);
-
-
+//        externalPortfolioService.sendVirement(updatePortefeuille);
 
 //        externalNotificationService.sendSMS(sms);
         return savedVirement;

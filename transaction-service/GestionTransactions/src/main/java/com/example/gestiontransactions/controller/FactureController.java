@@ -26,6 +26,7 @@ public class FactureController {
     public Facture recupererFacture(@PathVariable Long id) {
         return factureService.recupererFacture(id);
     }  // Récupérer une facture par son ID
+
     @GetMapping("")
     public List<Facture> getFactures() {
         return factureService.recupererFactures();
@@ -47,5 +48,10 @@ public class FactureController {
     @PutMapping("/{id}/payer")
     public Facture marquerFacturePayee(@PathVariable Long id) {
         return factureService.marquerFacturePayee(id);
+    } // Marquer une facture comme payée
+
+    @GetMapping("/fournisseurs/{id}")
+    public List<Facture> getFactureByFournisseurId(@PathVariable Long id) {
+        return factureService.getFactureByFournisseurId(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.gestiontransactions.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +16,8 @@ public class Compte {
     public Long id;
     public Double solde;
     public String devise;
+    public String Bank;
+    public String rib;
 
     public Compte(long l, double v) {
     }
@@ -29,6 +32,7 @@ public class Compte {
     private Integer idUser; // Référence à l'utilisateur
 
     @OneToMany(mappedBy = "compte")
+    @JsonIgnore
     private List<PaiementFacture> paiements; // Paiements associés à ce compte
 
     @OneToMany(mappedBy = "expediteur")
